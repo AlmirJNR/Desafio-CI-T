@@ -43,7 +43,7 @@ Qualquer dúvida que tenha, basta entrar em contato conosco que teremos o maior 
 
 Abaixo pode ser visto um wireframe de como essa tela pode ser construída:
 
-![Wireframe TODO List App](./images/wireframe-todolist-app.png)
+![Wireframe TODO List App](https://raw.githubusercontent.com/dhiegobastos/dev-test/master/images/wireframe-todolist-app.png)
 
 ### Backend
 
