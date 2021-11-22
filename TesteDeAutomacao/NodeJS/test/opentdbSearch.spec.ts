@@ -22,12 +22,15 @@ let driver: WebDriver;
 /** Changes the web driver that the test should access to open an browser
  * @param browser: 'chrome'
  * @param browser: 'firefox'
+ * @param browser: 'edge'
+ * @param browser: 'opera'
+ * @param browser: 'safari' mac only
  *
- * @param local: 'localhost'
- * @param local: 'dockerhost' */
-async function setWebDriver(browser:string, local: string) {
-	if (local.match('localhost')) {
-		driver = await new Builder().forBrowser(browser).usingServer('http://172.17.0.1:4444/wd/hub').build();
+ * @param host: 'localhost'
+ * @param host: 'dockerhost' */
+async function setWebDriver(browser:string, host: string) {
+	if (host.match('dockerhost')) {
+		driver = await new Builder().forBrowser(browser).usingServer('http://selenium-hub:4444/wd/hub').build();
 	} else {
 		driver = await new Builder().forBrowser(browser).usingServer('http://localhost:4444/wd/hub').build();
 	}
@@ -37,7 +40,7 @@ describe('Searching for "Science: Computers" in "Question" category', () => {
 	before(async () => {
 		searchText = process.env.WEB_SEARCH_TEXT_FIRST_STAGE;
 		searchCategory = process.env.WEB_SEARCH_CATEGORY_FIRST_STAGE;
-		await setWebDriver('chrome', 'localhost');
+		await setWebDriver(process.env.WEB_BROWSER, process.env.HOST_ENV);
 	});
 	it('should return an error', async () => {
 		try {
@@ -61,7 +64,7 @@ describe('Searching for "Science: Computers" in "Category" category', () => {
 	before(async () => {
 		searchText = process.env.WEB_SEARCH_TEXT_SECOND_STAGE;
 		searchCategory = process.env.WEB_SEARCH_CATEGORY_SECOND_STAGE;
-		await setWebDriver('chrome', 'localhost');
+		await setWebDriver(process.env.WEB_BROWSER, process.env.HOST_ENV);
 	});
 	it('should return a website with a table with 25 rows and a pagination controller on the bottom', async () => {
 		try {
