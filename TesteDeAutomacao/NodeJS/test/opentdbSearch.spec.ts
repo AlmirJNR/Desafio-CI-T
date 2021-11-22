@@ -20,17 +20,24 @@ const webUrl: string = process.env.WEB_URL;
 let driver: WebDriver;
 
 /** Changes the web driver that the test should access to open an browser
- * @param 'chrome'
- * @param 'firefox' */
-async function setWebDriver(browser:string) {
-	driver = await new Builder().forBrowser(browser).build();
+ * @param browser: 'chrome'
+ * @param browser: 'firefox'
+ *
+ * @param local: 'localhost'
+ * @param local: 'dockerhost' */
+async function setWebDriver(browser:string, local: string) {
+	if (local.match('localhost')) {
+		driver = await new Builder().forBrowser(browser).usingServer('http://172.17.0.1:4444/wd/hub').build();
+	} else {
+		driver = await new Builder().forBrowser(browser).usingServer('http://localhost:4444/wd/hub').build();
+	}
 }
 
 describe('Searching for "Science: Computers" in "Question" category', () => {
 	before(async () => {
 		searchText = process.env.WEB_SEARCH_TEXT_FIRST_STAGE;
 		searchCategory = process.env.WEB_SEARCH_CATEGORY_FIRST_STAGE;
-		await setWebDriver('chrome');
+		await setWebDriver('chrome', 'localhost');
 	});
 	it('should return an error', async () => {
 		try {
@@ -54,7 +61,7 @@ describe('Searching for "Science: Computers" in "Category" category', () => {
 	before(async () => {
 		searchText = process.env.WEB_SEARCH_TEXT_SECOND_STAGE;
 		searchCategory = process.env.WEB_SEARCH_CATEGORY_SECOND_STAGE;
-		await setWebDriver('chrome');
+		await setWebDriver('chrome', 'localhost');
 	});
 	it('should return a website with a table with 25 rows and a pagination controller on the bottom', async () => {
 		try {
