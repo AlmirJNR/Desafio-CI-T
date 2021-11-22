@@ -44,3 +44,8 @@ and execute
 ```bash
 docker logs <CONTAINER_ID> --follow
 ```
+
+The Selenium Grid web GUI can be found at port :4444
+
+E.g.
+`http://localhost:4444`
