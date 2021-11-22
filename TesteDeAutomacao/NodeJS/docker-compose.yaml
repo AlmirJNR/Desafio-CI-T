@@ -46,6 +46,6 @@ services:
       depends_on:
         - selenium/node-chrome
       build:
-        context: ./NodeJS
+        context: ./
       networks:
       - selenium-network
