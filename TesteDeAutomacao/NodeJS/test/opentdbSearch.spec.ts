@@ -66,11 +66,10 @@ describe('Searching for "Science: Computers" in "Category" category', () => {
 
 			const tableCells: WebElement[] = await driver.findElements(By.xpath('//*[@id="page-top"]/div[2]/table/tbody/tr'));
 
-			if (tableCells.length === 25) {
+			if (tableCells.length !== 25) {
+				throw new Error(`table length is diferent than expected (expected 25 rows but received ${tableCells.length} rows)`);
+			} else {
 				await driver.findElement(By.className('pagination pagination-lg'));
-			}
-			else {
-				await driver.findElement(By.className('table length is shorter than expected'));
 			}
 
 		} finally {
