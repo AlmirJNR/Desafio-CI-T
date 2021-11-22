@@ -44,6 +44,7 @@ services:
 
   node:
       depends_on:
+        - selenium/node-firefox
         - selenium/node-chrome
       build:
         context: ./
