@@ -1,7 +1,5 @@
 FROM node
 
-ENTRYPOINT ["tail", "-f", "/dev/null"]
-
 USER root
 
 WORKDIR /app
@@ -10,4 +8,6 @@ COPY . ./
 
 RUN npm i
 
-# CMD npm test
+RUN chmod +x entrypoint.sh
+
+ENTRYPOINT [ "sh", "./entrypoint.sh" ]

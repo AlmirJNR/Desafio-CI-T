@@ -48,5 +48,7 @@ services:
         - selenium/node-chrome
       build:
         context: ./
+      environment:
+        - WEB_BROWSER=${WEB_BROWSER}
       networks:
       - selenium-network
