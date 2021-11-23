@@ -4,4 +4,3 @@ done
 
 npm test && cd server && npm i
 npm start
-ls
