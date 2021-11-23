@@ -38,7 +38,7 @@ docker compose up --build
 ```
 ## After the building process
 
-#### Search by the docker image `nodejs_node` and check your own docker log terminal for better viewing result use the following command to find the specific container id
+#### Search by the docker image `nodejs_node` and check your own docker log terminal for better viewing result, use the following command to find the specific container id
 ```bash
 docker ps
 ```
