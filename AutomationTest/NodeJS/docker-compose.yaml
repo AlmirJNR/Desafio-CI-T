@@ -50,5 +50,7 @@ services:
         context: ./
       environment:
         - WEB_BROWSER=${WEB_BROWSER}
+      ports:
+        - "8080:8080"
       networks:
       - selenium-network

@@ -2,4 +2,5 @@ while ! (curl -sSL "http://selenium-hub:4444/status" | grep -i $WEB_BROWSER) >/d
     echo -n "."; sleep 0.2
 done
 
-npm test
+npm test && cd server && npm i
+npm start

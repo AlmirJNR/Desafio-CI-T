@@ -17,6 +17,8 @@ Development utilities:
   * A powerful linting tool
 * **mocha**
   * Flexible testing framework
+* **mochawesome**
+  * A custom reporter for use with testing framework
 * **selenium**
   * Web browser flexible automation tool
 
@@ -44,6 +46,13 @@ and execute
 ```bash
 docker logs <CONTAINER_ID> --follow
 ```
+
+## OR
+
+access your local port 8080 to see a full display of the tests that have been made, created by the mochawesome tool
+
+E.g.
+`http://localhost:8080`
 
 The Selenium Grid web GUI can be found at port :4444
 
