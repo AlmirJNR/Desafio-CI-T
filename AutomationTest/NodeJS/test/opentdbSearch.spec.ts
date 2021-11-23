@@ -22,12 +22,11 @@ let driver: WebDriver;
 /** Changes the web driver that the test should access to open an browser
  * @param browser: 'chrome'
  * @param browser: 'firefox'
- * @param browser: 'edge'
- * @param browser: 'opera'
- * @param browser: 'safari' mac only
+ * @param browser: 'edge' not supported by this current project
+ * @param browser: 'opera' not supported by this current project
+ * @param browser: 'safari' mac only and not supported by this current project
  *
- * @param host: 'localhost'
- * @param host: 'dockerhost' */
+ * @param host: 'localhost' or 'dockerhost' */
 async function setWebDriver(browser:string, host: string) {
 	if (host.match('dockerhost')) {
 		driver = await new Builder().forBrowser(browser).usingServer('http://selenium-hub:4444/wd/hub').build();
