@@ -1,6 +1,7 @@
 lockfileVersion: 5.3
 
 specifiers:
+  '@iconify/vue': ^3.1.1
   '@typescript-eslint/eslint-plugin': ^4.18.0
   '@typescript-eslint/parser': ^4.18.0
   '@vue/cli-plugin-babel': ~4.5.0
@@ -25,6 +26,7 @@ dependencies:
   vue-router: 4.0.12_vue@3.2.23
 
 devDependencies:
+  '@iconify/vue': 3.1.1_vue@3.2.23
   '@typescript-eslint/eslint-plugin': 4.33.0_e66a0234d36070dcc49614ed7c477ee7
   '@typescript-eslint/parser': 4.33.0_eslint@6.8.0+typescript@4.1.6
   '@vue/cli-plugin-babel': 4.5.15_637b329c4ca5f84e91800cc1f21ee875
@@ -1235,6 +1237,15 @@ packages:
     deprecated: This version has been deprecated and is no longer supported or maintained
     dependencies:
       '@hapi/hoek': 8.5.1
+    dev: true
+
+  /@iconify/vue/3.1.1_vue@3.2.23:
+    resolution: {integrity: sha512-lpRis4y8XHx0LQG1pbD71BuDlYKzCG3xKNsTs6svajQQe1DgkBbt1PEERnJTnmo9UzihTR0Bq7OwPQt7zR25RQ==}
+    peerDependencies:
+      vue: 3.x
+    dependencies:
+      cross-fetch: 3.1.4
+      vue: 3.2.23
     dev: true
 
   /@intervolga/optimize-cssnano-plugin/1.0.6_webpack@4.46.0:
@@ -3393,6 +3404,12 @@ packages:
       ripemd160: 2.0.2
       safe-buffer: 5.2.1
       sha.js: 2.4.11
+    dev: true
+
+  /cross-fetch/3.1.4:
+    resolution: {integrity: sha512-1eAtFWdIubi6T4XPy6ei9iUFoKpUkIF971QLN8lIvvvwueI65+Nw5haMNKUwfJxabqlIIDODJKGrQ66gxC0PbQ==}
+    dependencies:
+      node-fetch: 2.6.1
     dev: true
 
   /cross-spawn/5.1.0:
@@ -6475,6 +6492,11 @@ packages:
     resolution: {integrity: sha512-rmTZ9kz+f3rCvK2TD1Ue/oZlns7OGoIWP4fc3llxxRXlOkHKoWPPWJOfFYpITabSow43QJbRIoHQXtt10VldyQ==}
     dependencies:
       lower-case: 1.1.4
+    dev: true
+
+  /node-fetch/2.6.1:
+    resolution: {integrity: sha512-V4aYg89jEoVRxRb2fJdAg8FHvI7cEyYdVAh94HH0UIK8oJxUfkjlDQN9RbMx+bEjP7+ggMiFRprSti032Oipxw==}
+    engines: {node: 4.x || >=6.0.0}
     dev: true
 
   /node-forge/0.10.0:

@@ -2,19 +2,28 @@
   <div class="home">
     <img alt="Vue logo" src="../assets/logo.png">
     <HelloWorld msg="Welcome to Your Vue.js ToDo App"/>
+    <Table :table-data="toDoList"/>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
-import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
+<script setup lang="ts">
+import HelloWorld from '@/components/HelloWorld.vue';
+import Table from '@/components/Table.vue';
+import { ref } from 'vue';
 
-export default defineComponent({
-  name: 'Home',
-  components: {
-    HelloWorld,
+const toDoList = ref([{
+    text: 'Item 01',
+    isDone: false
   },
-});
+  {
+    text: 'Item 02',
+    isDone: false
+  },
+  {
+    text: 'Item 03',
+    isDone: false
+  }
+]);
 </script>
 
 <style>
