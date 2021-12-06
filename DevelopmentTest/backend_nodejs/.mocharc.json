@@ -1,0 +1,7 @@
+{
+  "full-trace": true,
+  "extension": ["ts"],
+  "spec": "test/**/*.spec.ts",
+  "recursive": true,
+  "require": ["ts-node/register", "tsconfig-paths/register"]
+}
