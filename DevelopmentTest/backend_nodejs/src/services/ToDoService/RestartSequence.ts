@@ -7,3 +7,9 @@ export async function restartIdSequence(): Promise<void> {
     `ALTER SEQUENCE ${ToDoTable}_id_seq RESTART WITH 1`,
   );
 }
+
+export async function updateIdValues(): Promise<void> {
+  return knexConnection().schema.raw(
+    `UPDATE ${ToDoTable} SET id = DEFAULT`,
+  );
+}
