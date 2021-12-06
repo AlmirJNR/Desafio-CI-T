@@ -1,4 +1,7 @@
-export default interface ToDo {
-  text: string,
-  isDone: boolean,
+export interface ToDo {
+  id?: number,
+  text?: string,
+  finished?: boolean,
+  dateCreated?: Date,
+  dateFinished?: Date,
 }
