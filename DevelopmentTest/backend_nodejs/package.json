@@ -7,7 +7,7 @@
 		"build": "babel src --extensions \".js,.ts\" --out-dir dist --copy-files --no-copy-ignored",
 		"start": "node dist/",
 		"dev": "ts-node-dev -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules --no-notify src/index.ts",
-		"test": "mocha",
+		"test": "mocha --exit -t 5000",
 		"knex": "knex --knexfile database/knexfile.ts --env main",
 		"knex:migration:add": "knex --knexfile database/knexfile.ts --env main migrate:make",
 		"knex:seed:add": "knex --knexfile database/knexfile.ts --env main seed:make"
