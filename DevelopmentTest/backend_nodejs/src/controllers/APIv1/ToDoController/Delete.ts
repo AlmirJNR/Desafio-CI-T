@@ -1,7 +1,6 @@
 import { Router } from 'express';
 
 import { deleteAllToDos, deleteToDoById } from '@/services/ToDoService/Delete';
-import { restartIdSequence, updateIdValues } from '@/services/ToDoService/RestartSequence';
 
 const router = Router();
 
@@ -14,7 +13,6 @@ router.delete('/all', async (request, response) => {
     return response.sendStatus(500);
   }
 
-  restartIdSequence();
   return response.sendStatus(200);
 });
 
@@ -29,8 +27,6 @@ router.delete('/:id', async (request, response) => {
     return response.sendStatus(404);
   }
 
-  restartIdSequence();
-  updateIdValues();
   return response.sendStatus(200);
 });
 
