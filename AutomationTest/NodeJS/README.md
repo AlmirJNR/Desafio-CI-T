@@ -4,11 +4,10 @@ This repository contains a complete test session with docker that implements sel
 
 # What's used
 
-* **Docker-compose** [version 2.2 | specification 3.9]
+* **Docker Compose** [version 3.9]
 * **Docker** [version 20.10.11 ]
 * **NodeJS** [version latest]
 * **TypeScript** [version 4.4.4+]
-* **Docker Compose** [version 3.9]
 
 # What's Included
 
