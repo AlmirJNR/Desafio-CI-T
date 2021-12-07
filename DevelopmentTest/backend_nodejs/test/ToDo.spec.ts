@@ -1,5 +1,5 @@
 /* eslint-disable no-plusplus */
-import { describe, it, before } from 'mocha';
+import { describe, it, before, after } from 'mocha';
 import request from 'supertest';
 
 import Server from '@/Server';
@@ -194,28 +194,28 @@ describe('Testing ToDo Controllers', () => {
           .get('/api/v1/todo/')
           .expect(200, [
             {
-              id: 1,
+              id: 2,
               text: 'UPDATED Mocha auto generated Test toDo',
               finished: false,
               date_created: '2021-12-31T10:00:00.000Z',
               date_finished: null,
             },
             {
-              id: 2,
+              id: 3,
               text: 'Mocha auto generated Test toDo',
               finished: true,
               date_created: '2021-12-31T10:00:00.000Z',
               date_finished: '2021-12-31T15:00:00.000Z',
             },
             {
-              id: 3,
+              id: 4,
               text: 'Mocha auto generated Test toDo',
               finished: false,
               date_created: '2021-12-31T11:00:00.000Z',
               date_finished: null,
             },
             {
-              id: 4,
+              id: 5,
               text: 'Mocha auto generated Test toDo',
               finished: false,
               date_created: '2021-12-31T10:00:00.000Z',
@@ -234,11 +234,15 @@ describe('Testing ToDo Controllers', () => {
     });
 
     describe('GET all after DELETE all', () => {
-      it('should return 404 that represents an empty table', async () => {
+      it('should return 200 that represents an empty table', async () => {
         await request(Server)
           .get('/api/v1/todo/')
-          .expect(404);
+          .expect(200);
       });
     });
+  });
+  after(async () => {
+    await restartIdSequence();
+    await updateIdValues();
   });
 });
