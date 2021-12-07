@@ -1,0 +1,37 @@
+version: "3.9"
+
+networks:
+  backend-network:
+    driver: bridge
+
+services:
+
+  postgres:
+    container_name: CITChallengeToDoListDatabase
+    image: postgres:14
+    environment:
+      POSTGRES_DB: citdevelopmentchallenge
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      PGDATA: /data/postgres
+    volumes:
+      - ./postgres:/data/postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - backend-network
+
+  node:
+      depends_on:
+        - postgres
+      build:
+        context: ./
+      ports:
+        - "5000:5000"
+      environment:
+        - DATABASE_CONNECTION_STRING=${DATABASE_CONNECTION_STRING}
+        - EXPRESS_PORT=${EXPRESS_PORT}
+      networks:
+      - backend-network
+      volumes:
+      - ./mochawesome-report:/app/mochawesome-report
