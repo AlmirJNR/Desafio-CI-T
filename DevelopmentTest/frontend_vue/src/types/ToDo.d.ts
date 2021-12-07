@@ -1,7 +1,9 @@
+import { Moment } from 'moment';
+
 export interface ToDo {
-  id?: number,
+  id: number,
   text?: string,
   finished?: boolean,
-  dateCreated?: Date,
-  dateFinished?: Date,
+  dateCreated?: Moment,
+  dateFinished?: Moment,
 }

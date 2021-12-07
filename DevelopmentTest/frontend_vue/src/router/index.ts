@@ -1,17 +1,16 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
-import Home from '../views/Home.vue';
-import About from '../views/About.vue';
+import Axios from '../views/Axios.vue';
+import NotFound from '../views/NotFound.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    name: 'Home',
-    component: Home,
+    name: 'Axios',
+    component: Axios,
   },
   {
-    path: '/about',
-    name: 'About',
-    component: About,
+    path: '/:pathMatch(.*)*',
+    component: NotFound,
   },
 ];
 
