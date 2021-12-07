@@ -9,7 +9,7 @@ router.get('/', async (request, response) => {
   const isSuccess = await getAllToDos();
 
   // Returns 404 if no ToDo is found within the database
-  if (!isSuccess || isSuccess.length === 0) {
+  if (!isSuccess) {
     return response.sendStatus(404);
   }
 
