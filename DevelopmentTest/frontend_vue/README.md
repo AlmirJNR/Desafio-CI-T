@@ -1,4 +1,6 @@
-# frontend_vue
+# Vue 3 frontend
+
+![Wireframe TODO List App](./src/assets/FrontEndExample.png)
 
 ## Project setup
 ```

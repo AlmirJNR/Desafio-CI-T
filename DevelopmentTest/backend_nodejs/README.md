@@ -1,4 +1,4 @@
-# NodeJS selenium testing
+# NodeJS API with unit testing
 This repository contains a complete test session that implements mocha, supertest and nodejs inside a Docker container
 
 # What's used
@@ -29,18 +29,16 @@ This project is build and meant to be used within docker compose
 docker compose
 ```
 
-### Building the test container:
-- navigate to `NodeJS` folder 
-```bash
-cd NodeJS
-```
+### Building the container:
 - build the docker container:
 ```bash
 docker compose up --build
 ```
 ## After the building process
 
-#### Search by the docker image `nodejs_node` and check your own docker log terminal for better viewing result, use the following command to find the specific container id
+## Checking the test results
+
+#### Search by the docker image `backend_nodejs_node` and check your own docker log terminal for better viewing result, use the following command to find the specific container id
 ```bash
 docker ps
 ```
@@ -49,14 +47,9 @@ and execute
 docker logs <CONTAINER_ID> --follow
 ```
 
-## OR
-
-access your local port 8080 to see a full display of the tests that have been made, created by the mochawesome tool
-
-E.g.
-`http://localhost:8080`
-
-The Selenium Grid web GUI can be found at port :4444
-
-E.g.
-`http://localhost:4444`
+#### Check the test results with an interface
+- navigate to mochawesome-report folder:
+```bash
+cd mochawesome-report
+```
+open `index.html` to see all executed tests and their codes
