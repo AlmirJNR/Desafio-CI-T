@@ -1,9 +1,11 @@
 <template>
-<div>
+<a href="/">
+  <div>
   <h1>
     404 Not Found
   </h1>
 </div>
+</a>
 </template>
 
 <script setup lang="ts">
@@ -17,5 +19,10 @@ div {
 
   height: 100vh;
   widows: 100vw;
+}
+
+a {
+  color: #41B883;
+  text-decoration: none;
 }
 </style>

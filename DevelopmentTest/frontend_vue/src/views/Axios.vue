@@ -5,7 +5,7 @@
       <div class="container-header">
         <p>Description:</p>
         <input class="input" v-model="message" />
-        <button @click="createNewToDo(); clearNewToDoInput()">Create</button>
+        <button @click="callService(createNewToDo(message)); clearNewToDoInput()">Create</button>
       </div>
 
       <div class="container-table">
@@ -31,9 +31,7 @@
                   <Icon class="Icon delete" icon="bx:bxs-trash-alt" />Delete
                 </button>
                 <button
-                  v-if="!item.finished"
-                  @click="updateToDoFinishedById(item.id, !item.finished, new Date())"
-                >
+                  v-if="!item.finished" @click="callService(updateToDoFinishedById(item.id, !item.finished, new Date()))">
                   <Icon class="Icon finished" icon="ic:round-download-done" />Finish
                 </button>
               </div>
@@ -54,10 +52,10 @@
               </template>
               <template v-slot:footer>
                 <div class="container-buttons-modal">
-                  <button @click="showModal = false; updateToDoTextById(editToDo!, editModalmessage); clearModalInput()">
+                  <button @click="showModal = false; callService(updateToDoTextById(editToDo!, editModalmessage)); clearModalInput()">
                     Ok
                   </button>
-                  <button @click="showModal = false; clearModalInput()">
+                  <button @click="showModal = false; clearModalInput();">
                     Cancel
                   </button>
                 </div>
@@ -70,7 +68,7 @@
           <button v-if="toDos.length > 0" class="footerButton1" @click="selectAllToDos">
             <Icon class="Icon footerButton1Icon" icon="fa-solid:border-all" />{{selectedToDos.length > 0 ? 'Deselect All' : 'Select All'}}
           </button>
-          <button v-if="selectedToDos.length > 0" class="footerButton2" @click="deleteSelectedToDos">
+          <button v-if="selectedToDos.length > 0" class="footerButton2" @click="callService(deleteToDoList(selectedToDos)); selectedToDos = []">
             <Icon class="Icon footerButton2Icon" icon="bx:bxs-trash-alt" />Delete selected
           </button>
         </div>
@@ -87,6 +85,19 @@ import { Icon } from '@iconify/vue';
 import moment from 'moment';
 import EditModal from '@/components/EditModal.vue'
 
+import {
+  createNewToDo,
+  getAllToDos,
+  updateToDoById,
+  updateToDoDateCreatedById,
+  updateToDoDateFinishedById,
+  updateToDoFinishedById,
+  updateToDoTextById,
+  deleteAllToDos,
+  deleteToDoById,
+  deleteToDoList
+} from '@/services/ToDoService';
+
 const message = ref<string>('');
 const editModalmessage = ref<string>('');
 
@@ -95,13 +106,20 @@ const toDos = ref<ToDo[]>([]);
 const toDoFinishedClass = 'toDo';
 const toDoUnfinishedClass = 'toDoUnfinished';
 
-function getAllToDos() {
-  axios.get('http://localhost:5000/api/v1/todo/').then((response) => {
+
+function callService(callback: any) {
+  callback.then(() => {
+    getToDos();
+  });
+}
+
+function getToDos() {
+  getAllToDos().then((response) => {
     toDos.value = response.data;
   });
 }
 
-getAllToDos();
+getToDos();
 
 const editToDo = ref<number>();
 
@@ -130,103 +148,6 @@ function selectAllToDos() {
       selectedToDos.value.push(item.id);
     }
   }
-}
-
-function deleteSelectedToDos() {
-  for (const item of selectedToDos.value) {
-    deleteToDoById(item);
-  };
-
-  selectedToDos.value = [];
-};
-
-async function createNewToDo() {
-  await axios({
-    method: 'post',
-    url: 'http://localhost:5000/api/v1/todo/create',
-    data: {
-      text: message.value,
-      finished: false,
-      dateCreated: new Date(),
-    }
-  });
-
-  getAllToDos();
-}
-async function updateToDoById(id: number, text: string, finished?: boolean, dateCreated?: Date, dateFinished?: Date) {
-  await axios({
-    method: 'put',
-    url: `http://localhost:5000/api/v1/todo/update/${id}`,
-    data: {
-      text: `${text}`,
-      finished: finished || false,
-      dateCreated: dateCreated || new Date(),
-      dateFinished: dateFinished || new Date(),
-    }
-  });
-
-  getAllToDos();
-}
-async function updateToDoTextById(id: number, updatedText: string) {
-  await axios({
-    method: 'put',
-    url: `http://localhost:5000/api/v1/todo/update/text/${id}`,
-    data: {
-      text: `${updatedText}`,
-    }
-  });
-
-  getAllToDos();
-}
-async function updateToDoFinishedById(id: number, updatedFinished: boolean, updatedDateFinished: Date) {
-  await axios({
-    method: 'put',
-    url: `http://localhost:5000/api/v1/todo/update/finished/${id}`,
-    data: {
-      finished: updatedFinished,
-      dateFinished: updatedDateFinished,
-    }
-  });
-
-  getAllToDos();
-}
-async function updateToDoDateCreatedById(id: number, updatedDateCreated: Date) {
-  await axios({
-    method: 'put',
-    url: `http://localhost:5000/api/v1/todo/update/datecreated/${id}`,
-    data: {
-      dateCreated: updatedDateCreated,
-    }
-  });
-
-  getAllToDos();
-}
-async function updateToDoDateFinishedById(id: number, updatedDateFinished: Date) {
-  await axios({
-    method: 'put',
-    url: `http://localhost:5000/api/v1/todo/update/datefinished/${id}`,
-    data: {
-      dateFinished: updatedDateFinished,
-    }
-  });
-
-  getAllToDos();
-}
-async function deleteAllToDos() {
-  await axios({
-    method: 'delete',
-    url: 'http://localhost:5000/api/v1/todo/delete/all/',
-  });
-
-  getAllToDos();
-}
-async function deleteToDoById(id: number) {
-  await axios({
-    method: 'delete',
-    url: `http://localhost:5000/api/v1/todo/delete/${id}`,
-  });
-
-  getAllToDos();
 }
 </script>
 
