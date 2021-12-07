@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import { deleteAllToDos, deleteToDoById } from '@/services/ToDoService/Delete';
+import { deleteAllToDos, deleteToDoById, deleteToDoList } from '@/services/ToDoService/Delete';
 
 const router = Router();
 
@@ -24,7 +24,21 @@ router.delete('/:id', async (request, response) => {
 
   // Returns 404 if server wasn't able to delete all toDos
   if (!isSuccess) {
-    return response.sendStatus(404);
+    return response.sendStatus(500);
+  }
+
+  return response.sendStatus(200);
+});
+
+/** DELETE: delete specific ToDo list */
+router.post('/list', async (request, response) => {
+  const { ids } = request.body;
+
+  const isSuccess = await deleteToDoList(ids as number[]);
+
+  // Returns 404 if server wasn't able to delete all toDos
+  if (!isSuccess) {
+    return response.sendStatus(500);
   }
 
   return response.sendStatus(200);

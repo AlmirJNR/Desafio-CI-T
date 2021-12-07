@@ -16,3 +16,10 @@ export async function deleteToDoById(id: number): Promise<ToDo|undefined> {
     .from(ToDoTable)
     .where('id', id);
 }
+
+export async function deleteToDoList(ids: number[]): Promise<ToDo|undefined> {
+  return knexConnection()
+    .delete<ToDo>()
+    .from(ToDoTable)
+    .whereIn('id', ids);
+}
