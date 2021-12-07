@@ -1,11 +1,11 @@
 <template>
   <div class="container-global">
-    <h1>Welcome to Axios page</h1>
+    <h1>My TODO List</h1>
     <div>
       <div class="container-header">
         <p>Description:</p>
-        <input v-model="message" />
-        <button @click="createNewToDo">Create new ToDo</button>
+        <input class="input" v-model="message" />
+        <button @click="createNewToDo(); clearNewToDoInput()">Create</button>
       </div>
 
       <div class="container-table">
@@ -24,9 +24,9 @@
             <td :class="[item.finished ? toDoFinishedClass : toDoUnfinishedClass]">{{ item.text }}</td>
             <td>
               <div class="container-actions">
-                <button @click="updateToDoTextById(item.id, message)">
+                  <button id="show-modal" @click="showEditModal(item.id)">
                   <Icon class="Icon edit" icon="jam:write-f" />Edit
-                </button>
+                  </button>
                 <button @click="deleteToDoById(item.id)">
                   <Icon class="Icon delete" icon="bx:bxs-trash-alt" />Delete
                 </button>
@@ -41,14 +41,37 @@
             <td>{{ moment(item.dateCreated).format("DD-MM-YYYY") }}</td>
             <td>{{ item.finished ? moment(item.dateFinished).format("DD-MM-YYYY") : '' }}</td>
           </tr>
+
+          <!-- use the modal component, pass in the prop -->
+          <transition name="modal">
+            <EditModal v-if="showModal">
+              <!-- you can use custom content here to overwrite default content -->
+              <template v-slot:header>
+                <h2 class="modalText">Edit your ToDo</h2>
+              </template>
+              <template v-slot:body>
+                <input class="input" v-model="editModalmessage"/>
+              </template>
+              <template v-slot:footer>
+                <div class="container-buttons-modal">
+                  <button @click="showModal = false; updateToDoTextById(editToDo!, editModalmessage); clearModalInput()">
+                    Ok
+                  </button>
+                  <button @click="showModal = false; clearModalInput()">
+                    Cancel
+                  </button>
+                </div>
+              </template>
+            </EditModal>
+          </transition>
         </table>
 
         <div class="container-footer">
           <button v-if="toDos.length > 0" class="footerButton1" @click="selectAllToDos">
-            <Icon class="Icon" icon="fa-solid:border-all" />Select All
+            <Icon class="Icon footerButton1Icon" icon="fa-solid:border-all" />{{selectedToDos.length > 0 ? 'Deselect All' : 'Select All'}}
           </button>
           <button v-if="selectedToDos.length > 0" class="footerButton2" @click="deleteSelectedToDos">
-            <Icon class="Icon" icon="bx:bxs-trash-alt" />Delete selected
+            <Icon class="Icon footerButton2Icon" icon="bx:bxs-trash-alt" />Delete selected
           </button>
         </div>
       </div>
@@ -62,8 +85,10 @@ import { ToDo } from '@/types/ToDo';
 import { ref } from 'vue';
 import { Icon } from '@iconify/vue';
 import moment from 'moment';
+import EditModal from '@/components/EditModal.vue'
 
 const message = ref<string>('');
+const editModalmessage = ref<string>('');
 
 const toDos = ref<ToDo[]>([]);
 
@@ -78,7 +103,23 @@ function getAllToDos() {
 
 getAllToDos();
 
+const editToDo = ref<number>();
+
+function showEditModal(itemId: number) {
+  editToDo.value = itemId;
+  showModal.value = true;
+}
+
 const selectedToDos = ref<number[]>([]);
+
+const showModal = ref<boolean>(false);
+
+function clearModalInput() {
+  editModalmessage.value = '';
+}
+function clearNewToDoInput() {
+  message.value = '';
+}
 
 function selectAllToDos() {
   if (selectedToDos.value.length > 0) {
@@ -112,15 +153,15 @@ async function createNewToDo() {
 
   getAllToDos();
 }
-async function updateToDoById(id: number) {
+async function updateToDoById(id: number, text: string, finished?: boolean, dateCreated?: Date, dateFinished?: Date) {
   await axios({
     method: 'put',
     url: `http://localhost:5000/api/v1/todo/update/${id}`,
     data: {
-      text: 'Updated Axios todo',
-      finished: true,
-      dateCreated: new Date(),
-      dateFinished: new Date(),
+      text: `${text}`,
+      finished: finished || false,
+      dateCreated: dateCreated || new Date(),
+      dateFinished: dateFinished || new Date(),
     }
   });
 
@@ -198,13 +239,17 @@ async function deleteToDoById(id: number) {
   flex-direction: column;
 }
 
+.container-global > h1 {
+  color: #41B883;
+}
+
 .container-header {
   display: flex;
   align-items: center;
   justify-content: flex-start;
   width: 100%;
 }
-.container-header > input {
+.input {
   height: 1.5rem;
   font-size: 1em;
   padding: 0rem 0.5rem 0rem 0.5rem;
@@ -248,6 +293,17 @@ async function deleteToDoById(id: number) {
   flex-direction: row;
   align-items: center;
   justify-content: center;
+}
+
+.container-buttons-modal {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.modalText {
+  color: #41B883;
 }
 
 .container-footer {
@@ -337,5 +393,18 @@ button:hover .delete {
 button:hover .finished {
   font-size: 1.25em;
   color: green;
+}
+
+button:hover .footerButton1Icon {
+  color: orange;
+}
+button:active .footerButton1Icon {
+  color: white;
+}
+button:hover .footerButton2Icon {
+  color: red;
+}
+button:active .footerButton2Icon {
+  color: white;
 }
 </style>
