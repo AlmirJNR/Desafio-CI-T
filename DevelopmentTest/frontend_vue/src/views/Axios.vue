@@ -27,7 +27,7 @@
                   <button id="show-modal" @click="showEditModal(item.id)">
                   <Icon class="Icon edit" icon="jam:write-f" />Edit
                   </button>
-                <button @click="deleteToDoById(item.id)">
+                <button @click="callService(deleteToDoById(item.id))">
                   <Icon class="Icon delete" icon="bx:bxs-trash-alt" />Delete
                 </button>
                 <button
